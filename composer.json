@@ -1,0 +1,15 @@
+{
+  "name": "luongtrieuvi/bai01_quanly_sv",
+  "description": "Hien thi danh sach sinh vien",
+  "autoload": {
+    "psr-4": {
+      "Luongtrieuvi\\Bai01QuanlySv\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "luongtrieuvi"
+    }
+  ],
+  "require": {}
+}
