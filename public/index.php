@@ -11,7 +11,12 @@ switch ($action) {
     case 'add':
         $controller->add();
         break;
-    case 'index':
+    case 'edit':
+        $controller->edit();
+        break;
+    case 'update':
+        $controller->update();
+        break;
     default:
         $controller->index();
         break;
