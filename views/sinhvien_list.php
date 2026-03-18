@@ -100,7 +100,17 @@ thoại" required>
                             htmlspecialchars($student['email']); ?></td>
                         <td><?php echo
                             htmlspecialchars($student['phone']); ?></td>
+                        <td>
+                            <a href="index.php?action=edit&id=<?php echo $student['id'];
+                                                                ?>">Sửa</a>
+                            |
+                            <a href="index.php?action=delete&id=<?php echo
+                                                                $student['id']; ?>"
 
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này ra khỏi danh sách lớp K17 không?');">
+                                Xóa
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (empty($students)): ?>

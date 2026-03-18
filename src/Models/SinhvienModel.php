@@ -75,4 +75,17 @@ phone = :phone WHERE id = :id"
         }
         return false;
     }
+
+    public function deleteStudent($id)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM students WHERE
+
+id = :id");
+
+        $stmt->bindParam(':id', $id);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
