@@ -13,11 +13,24 @@ class SinhvienModel
         $this->conn = Database::getInstance()->getConnection();
     }
     // Lấy tất cả sinh viên
-    public function getAllStudents()
+    // Nâng cấp hàm getAllStudents để có thể tìm kiếm
+    public function getAllStudents($keyword = null)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM students
-
-ORDER BY id DESC");
+        // Bắt đầu câu lệnh SQL
+        $sql = "SELECT * FROM students";
+        // Nếu có từ khóa tìm kiếm, thêm điều kiện WHERE
+        if ($keyword) {
+            // Sử dụng LIKE để tìm kiếm gần đúng
+            $sql .= " WHERE name LIKE :keyword";
+        }
+        $sql .= " ORDER BY id DESC";
+        $stmt = $this->conn->prepare($sql);
+        // Nếu có từ khóa, gán giá trị cho tham số :keyword
+        if ($keyword) {
+            // Thêm dấu % vào hai bên từ khóa để tìm kiếm bất kỳ chuỗi nào chứa từ khóa đó
+            $searchKeyword = "%{$keyword}%";
+            $stmt->bindParam(':keyword', $searchKeyword);
+        }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -44,10 +57,7 @@ email, phone) VALUES (:name, :email, :phone)");
 
     public function getStudentById($id)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM students
-
-WHERE id = :id");
-
+        $stmt = $this->conn->prepare("SELECT * FROM students WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -56,10 +66,7 @@ WHERE id = :id");
     public function updateStudent($id, $name, $email, $phone)
     {
         $stmt = $this->conn->prepare(
-            "UPDATE students SET name = :name, email = :email,
-
-phone = :phone WHERE id = :id"
-
+            "UPDATE students SET name = :name, email = :email, phone = :phone WHERE id = :id"
         );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
@@ -78,10 +85,7 @@ phone = :phone WHERE id = :id"
 
     public function deleteStudent($id)
     {
-        $stmt = $this->conn->prepare("DELETE FROM students WHERE
-
-id = :id");
-
+        $stmt = $this->conn->prepare("DELETE FROM students WHERE id = :id");
         $stmt->bindParam(':id', $id);
         if ($stmt->execute()) {
             return true;
