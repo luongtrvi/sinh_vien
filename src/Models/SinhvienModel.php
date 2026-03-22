@@ -13,7 +13,6 @@ class SinhvienModel
         $this->conn = Database::getInstance()->getConnection();
     }
     // Lấy tất cả sinh viên
-    // Nâng cấp hàm getAllStudents để có thể tìm kiếm
     public function getAllStudents($keyword = null)
     {
         // Bắt đầu câu lệnh SQL
@@ -37,10 +36,7 @@ class SinhvienModel
     // Thêm sinh viên mới
     public function addStudent($name, $email, $phone)
     {
-        $stmt = $this->conn->prepare("INSERT INTO students (name,
-
-email, phone) VALUES (:name, :email, :phone)");
-
+        $stmt = $this->conn->prepare("INSERT INTO students (name, email, phone) VALUES (:name, :email, :phone)");
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
@@ -55,6 +51,7 @@ email, phone) VALUES (:name, :email, :phone)");
         return false;
     }
 
+    // Lấy thông tin sinh viên theo ID
     public function getStudentById($id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM students WHERE id = :id");
@@ -63,6 +60,7 @@ email, phone) VALUES (:name, :email, :phone)");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Cập nhật thông tin sinh viên
     public function updateStudent($id, $name, $email, $phone)
     {
         $stmt = $this->conn->prepare(
@@ -83,6 +81,7 @@ email, phone) VALUES (:name, :email, :phone)");
         return false;
     }
 
+    // Xóa sinh viên
     public function deleteStudent($id)
     {
         $stmt = $this->conn->prepare("DELETE FROM students WHERE id = :id");
@@ -91,5 +90,49 @@ email, phone) VALUES (:name, :email, :phone)");
             return true;
         }
         return false;
+    }
+
+    public function getStudents($keyword = null, $limit = 5, $offset = 0)
+    {
+        // --- BƯỚC 1: ĐẾM ---
+        $sqlCount = "SELECT COUNT(*) FROM students";
+        $params = [];
+
+        if ($keyword) {
+            $sqlCount .= " WHERE name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword";
+            $params[':keyword'] = "%{$keyword}%";
+        }
+
+        $stmtCount = $this->conn->prepare($sqlCount);
+        $stmtCount->execute($params);
+        $totalRecords = $stmtCount->fetchColumn();
+
+        // --- BƯỚC 2: LẤY DATA ---
+        $sqlData = "SELECT * FROM students";
+
+        if ($keyword) {
+            $sqlData .= " WHERE name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword";
+        }
+
+        // ✅ QUAN TRỌNG: ORDER BY trước LIMIT
+        $sqlData .= " ORDER BY id DESC LIMIT :limit OFFSET :offset";
+
+        $stmtData = $this->conn->prepare($sqlData);
+
+        // ✅ bindValue thay vì bindParam (tránh lỗi tham chiếu)
+        if ($keyword) {
+            $stmtData->bindValue(':keyword', "%{$keyword}%", PDO::PARAM_STR);
+        }
+
+        $stmtData->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmtData->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+        $stmtData->execute();
+        $students = $stmtData->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'data' => $students,
+            'total' => $totalRecords
+        ];
     }
 }
