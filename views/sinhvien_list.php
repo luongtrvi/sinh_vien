@@ -114,6 +114,7 @@ initial-scale=1.0">
                 value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
             <button type="submit">Tìm kiếm</button>
             <a href="index.php" style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset</a>
+            <a href="index.php?action=dashboard" style="padding: 8px 12px; background-color: #17a2b8; color: white; text-decoration: none; border-radius: 3px;">Xem Thống kê</a>
         </form>
         <h2>Danh sách sinh viên</h2>
         <table>

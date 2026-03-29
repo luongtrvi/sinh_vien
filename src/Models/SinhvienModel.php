@@ -94,6 +94,31 @@ class SinhvienModel
         return false;
     }
 
+    /**
+     * Lấy các số liệu thống kê về sinh viên
+     */
+    public function getStatistics()
+    {
+        $sql = "
+        SELECT
+        COUNT(*) AS total_students,
+        SUM(CASE WHEN email LIKE '%@tdu.edu.vn' THEN 1
+
+        ELSE 0 END) AS edu_emails,
+
+        SUM(CASE WHEN phone LIKE '09%' THEN 1 ELSE 0 END)
+
+        AS sdt_09
+
+        FROM
+        students
+
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getStudents($keyword = null, $limit = 5, $offset = 0)
     {
         // --- BƯỚC 1: ĐẾM ---

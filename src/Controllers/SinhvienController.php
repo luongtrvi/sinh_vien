@@ -211,4 +211,15 @@ class SinhvienController
         header('Location: index.php');
         exit();
     }
+
+    /**
+     * Hiển thị trang dashboard thống kê
+     */
+    public function dashboard()
+    {
+        // Gọi model để lấy dữ liệu thống kê
+        $stats = $this->sinhvienModel->getStatistics();
+        // Nạp file view và truyền biến $stats ra
+        require_once __DIR__ . '/../../views/dashboard.php';
+    }
 }
