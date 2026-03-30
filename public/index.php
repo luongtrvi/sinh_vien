@@ -10,6 +10,7 @@ require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 use Luongtrieuvi\Bai01QuanlySv\Controllers\UserController;
 use Luongtrieuvi\Bai01QuanlySv\Controllers\SinhvienController;
+use Luongtrieuvi\Bai01QuanlySv\Controllers\PageController;
 
 // Simple Router
 $action = $_GET['action'] ?? 'index';
@@ -47,7 +48,9 @@ $public_actions = [
     'login',
     'register',
     'do_login',
-    'do_register'
+    'do_register',
+    'contact',
+    'submit_contact',
 ];
 // Nếu action không nằm trong danh sách public và người dùng chưa đăng nhập thì chuyển hướng họ về trang đăng nhập
 if (
@@ -67,6 +70,8 @@ if (in_array($action, [
     'logout'
 ])) {
     $controller = new UserController();
+} elseif (in_array($action, ['contact', 'submit_contact'])) {
+    $controller = new PageController();
 } else {
     $controller = new SinhvienController();
 }
@@ -105,6 +110,12 @@ switch ($action) {
         break;
     case 'logout':
         $controller->logout();
+        break;
+    case 'contact':
+        $controller->showContactForm();
+        break;
+    case 'submit_contact':
+        $controller->submitContact();
         break;
     default:
         $controller = new SinhvienController();

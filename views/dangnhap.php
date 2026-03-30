@@ -93,6 +93,10 @@
         <div class="switch-form">
             Chưa có tài khoản? <a href="index.php?action=register">Đăng ký ngay!</a>
         </div>
+        <div class="switch-form">
+            <a href="index.php?action=contact">Liên hệ hỗ trợ</a>
+        </div>
+    </div>
     </div>
 </body>
 
