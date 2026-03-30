@@ -143,8 +143,11 @@ initial-scale=1.0">
                                     width="50" height="50" style="border-radius: 50%;">
                             <?php endif; ?>
                         </td>
-                        <td><?php echo
-                            htmlspecialchars($student['name']); ?></td>
+                        <td>
+                            <a href="index.php?action=detail&id=<?php echo $student['id']; ?>">
+                                <?php echo htmlspecialchars($student['name']); ?>
+                            </a>
+                        </td>
                         <td><?php echo
                             htmlspecialchars($student['email']); ?></td>
                         <td><?php echo
