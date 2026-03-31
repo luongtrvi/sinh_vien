@@ -125,7 +125,10 @@ initial-scale=1.0">
                     <th>Họ và Tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-                    <th>hành động</th>
+                    <th>Khóa học</th>
+                    <th>Tên lớp</th>
+                    <th>Nghành học</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
@@ -152,10 +155,13 @@ initial-scale=1.0">
                             htmlspecialchars($student['email']); ?></td>
                         <td><?php echo
                             htmlspecialchars($student['phone']); ?></td>
+                        <td><?php echo htmlspecialchars($student['course'] ?? '—'); ?></td>
+                        <td><?php echo htmlspecialchars($student['class_name'] ?? '—'); ?></td>
+                        <td><?php echo htmlspecialchars($student['major'] ?? '—'); ?></td>
                         <td>
                             <a href="index.php?action=edit&id=<?php echo $student['id'];
                                                                 ?>">Sửa</a>
-                            |
+                            ====
                             <a href="index.php?action=delete&id=<?php echo
                                                                 $student['id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này ra khỏi danh sách lớp K17 không?');">
                                 Xóa
@@ -193,6 +199,9 @@ initial-scale=1.0">
 
                 required>
 
+            <input type="text" name="course" placeholder="Khóa học (vd: K17)">
+            <input type="text" name="class_name" placeholder="Tên lớp (vd: CNTT01)">
+            <input type="text" name="major" placeholder="Ngành học (vd: Công nghệ thông tin)">
             <label for="avatar">Ảnh đại diện:</label>
             <input type="file" id="avatar" name="avatar">
             <button type="submit">Thêm mới</button>

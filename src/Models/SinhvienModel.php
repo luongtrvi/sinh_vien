@@ -34,18 +34,24 @@ class SinhvienModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // Thêm sinh viên mới
-    public function addStudent($name, $email, $phone, $avatar)
+    public function addStudent($name, $email, $phone, $avatar, $course = null, $class_name = null, $major = null)
     {
-        $stmt = $this->conn->prepare("INSERT INTO students (name, email, phone, avatar) VALUES (:name, :email, :phone, :avatar)");
+        $stmt = $this->conn->prepare("INSERT INTO students (name, email, phone, avatar, course, class_name, major) VALUES (:name, :email, :phone, :avatar, :course, :class_name, :major)");
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
         $phone = htmlspecialchars(strip_tags($phone));
+        $course = $course ? htmlspecialchars(strip_tags($course)) : null;
+        $class_name = $class_name ? htmlspecialchars(strip_tags($class_name)) : null;
+        $major = $major ? htmlspecialchars(strip_tags($major)) : null;
         // Gán dữ liệu vào câu lệnh
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':avatar', $avatar);
+        $stmt->bindParam(':course', $course);
+        $stmt->bindParam(':class_name', $class_name);
+        $stmt->bindParam(':major', $major);
         if ($stmt->execute()) {
             return true;
         }
@@ -62,21 +68,27 @@ class SinhvienModel
     }
 
     // Cập nhật thông tin sinh viên
-    public function updateStudent($id, $name, $email, $phone, $avatar)
+    public function updateStudent($id, $name, $email, $phone, $avatar, $course = null, $class_name = null, $major = null)
     {
         $stmt = $this->conn->prepare(
-            "UPDATE students SET name = :name, email = :email, phone = :phone, avatar = :avatar WHERE id = :id"
+            "UPDATE students SET name = :name, email = :email, phone = :phone, avatar = :avatar, course = :course, class_name = :class_name, major = :major WHERE id = :id"
         );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
         $phone = htmlspecialchars(strip_tags($phone));
+        $course = $course ? htmlspecialchars(strip_tags($course)) : null;
+        $class_name = $class_name ? htmlspecialchars(strip_tags($class_name)) : null;
+        $major = $major ? htmlspecialchars(strip_tags($major)) : null;
         // Gán dữ liệu vào câu lệnh
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':avatar', $avatar);
+        $stmt->bindParam(':course', $course);
+        $stmt->bindParam(':class_name', $class_name);
+        $stmt->bindParam(':major', $major);
         if ($stmt->execute()) {
             return true;
         }
