@@ -83,6 +83,33 @@ initial-scale=1.0">
         .flash-error {
             background-color: #dc3545;
         }
+
+        th a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            position: relative;
+        }
+
+        th a .sort-arrow {
+            display: none;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        th a.sort-asc .sort-arrow::after {
+            content: " ▲";
+        }
+
+        th a.sort-desc .sort-arrow::after {
+            content: " ▼";
+        }
+
+        th a.active .sort-arrow {
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -120,11 +147,67 @@ initial-scale=1.0">
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>
+                        <?php
+                        // Xác định thứ tự cho cột này
+                        // Nếu đang sort cột này, thì dùng $nextOrder, nếu không thì dùng 'asc'
+                        $currentColOrder = ($sortby === 'id') ?
+                            $nextOrder : 'asc';
+                        $activeClass = ($sortby === 'id') ? 'active sort-' . $order : ''; ?>
+                        <a href="?keyword=<?php echo
+                                            urlencode($keyword ?? ''); ?>&page=<?php echo $currentPage;
+                                                                                ?>&sortby=id&order=<?php echo $currentColOrder; ?>"
+                            class="<?php echo $activeClass; ?>">
+                            ID <span class="sort-arrow"></span>
+                        </a>
+                    </th>
                     <th>Ảnh đại diện</th>
-                    <th>Họ và Tên</th>
-                    <th>Email</th>
-                    <th>Số điện thoại</th>
+                    <th>
+                        <?php
+
+                        $currentColOrder = ($sortby === 'name') ?
+                            $nextOrder : 'asc';
+                        $activeClass = ($sortby === 'name') ? 'active sort-' . $order : '';
+                        ?>
+                        <a href="?keyword=<?php echo
+                                            urlencode($keyword ?? ''); ?>&page=<?php echo $currentPage;
+                                                                                ?>&sortby=name&order=<?php echo $currentColOrder; ?>"
+                            class="<?php echo $activeClass; ?>">
+                            Họ và Tên <span class="sort-arrow"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <?php
+                        $currentColOrder = ($sortby === 'email') ?
+                            $nextOrder : 'asc';
+                        $activeClass = ($sortby === 'email') ?
+                            'active sort-' . $order : '';
+                        ?>
+
+                        <a href="?keyword=<?php echo
+                                            urlencode($keyword ?? ''); ?>&page=<?php echo $currentPage;
+                                                                                ?>&sortby=email&order=<?php echo $currentColOrder; ?>"
+                            class="<?php echo $activeClass; ?>">
+                            Email <span class="sort-arrow"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <?php
+
+                        $currentColOrder = ($sortby === 'phone') ?
+                            $nextOrder : 'asc';
+                        $activeClass = ($sortby === 'phone') ?
+                            'active sort-' . $order : '';
+                        ?>
+
+                        <a href="?keyword=<?php echo
+                                            urlencode($keyword ?? ''); ?>&page=<?php echo $currentPage;
+                                                                                ?>&sortby=phone&order=<?php echo $currentColOrder; ?>"
+                            class="<?php echo $activeClass; ?>">
+                            Số điện thoại <span
+                                class="sort-arrow"></span>
+                        </a>
+                    </th>
                     <th>Khóa học</th>
                     <th>Tên lớp</th>
                     <th>Nghành học</th>

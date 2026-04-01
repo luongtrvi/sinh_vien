@@ -131,7 +131,7 @@ class SinhvienModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getStudents($keyword = null, $limit = 5, $offset = 0)
+    public function getStudents($keyword = null, $limit = 5, $offset = 0, $sortby = 'id', $order = 'desc')
     {
         // --- BƯỚC 1: ĐẾM ---
         $sqlCount = "SELECT COUNT(*) FROM students";
@@ -153,8 +153,12 @@ class SinhvienModel
             $sqlData .= " WHERE name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword";
         }
 
-        // ✅ QUAN TRỌNG: ORDER BY trước LIMIT
-        $sqlData .= " ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        // THÊM LOGIC ORDER BY (PHẦN MỚI)
+        // Chúng ta đã validate $sortby và $order ở Controller
+        // nên ở đây có thể nối chuỗi an toàn.
+        $sqlData .= " ORDER BY " . $sortby . " " . $order;
+        // Thêm LIMIT và OFFSET
+        $sqlData .= " LIMIT :limit OFFSET :offset";
 
         $stmtData = $this->conn->prepare($sqlData);
 
