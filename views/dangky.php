@@ -74,6 +74,7 @@
 </head>
 
 <body>
+
     <div class="container">
         <h1>Đăng ký tài khoản</h1>
         <?php if (isset($error)): ?>
@@ -81,6 +82,10 @@
         <?php endif; ?>
         <form action="index.php?action=do_register"
             method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
             <div class="form-group">
                 <label for="name">Họ và Tên:</label>
                 <input type="text" id="name" name="name" required>

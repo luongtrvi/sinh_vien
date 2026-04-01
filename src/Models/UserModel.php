@@ -28,29 +28,21 @@ username = :username");
     /**
      * Tạo người dùng mới
      */
-    public function createUser($name, $username, $password)
+    public function createUser($name, $username, $password, $email)
     {
         // Kiểm tra xem username đã tồn tại chưa
         if ($this->findUserByUsername($username)) {
             return false; // Username đã tồn tại
         }
         // --- Băm mật khẩu - BƯỚC BẢO MẬT QUAN TRỌNG NHẤT ---
-        $passwordHash = password_hash(
-            $password,
-
-            PASSWORD_DEFAULT
-        );
-
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->conn->prepare(
-
-            "INSERT INTO users (name, username, password) VALUES
-
-(:name, :username, :password)"
-
+            "INSERT INTO users (name, username, password, email) VALUES (:name, :username, :password, :email)"
         );
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $passwordHash);
+        $stmt->bindParam(':email', $email);
         return $stmt->execute();
     }
 }

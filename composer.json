@@ -11,5 +11,7 @@
       "name": "luongtrieuvi"
     }
   ],
-  "require": {}
+  "require": {
+    "phpmailer/phpmailer": "^7.0"
+  }
 }
