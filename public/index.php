@@ -12,17 +12,30 @@ use Luongtrieuvi\Bai01QuanlySv\Controllers\UserController;
 use Luongtrieuvi\Bai01QuanlySv\Controllers\SinhvienController;
 use Luongtrieuvi\Bai01QuanlySv\Controllers\PageController;
 
-// Simple Router
 $action = $_GET['action'] ?? 'index';
+// Danh sách các action KHÔNG yêu cầu đăng nhập
+$public_actions = [
+    'login', // Hiển thị form đăng nhập
+    'do_login', // Xử lý logic đăng nhập
+    'register', // Hiển thị form đăng ký
+    'do_register', // Xử lý logic đăng ký
+    'verify', // Xử lý link xác nhận email
+    'contact', // Hiển thị form liên hệ
+    'submit_contact' // Xử lý logic gửi liên hệ
+];
 
-// Danh sách các action không yêu cầu đăng nhập
-// $public_actions = ['login', 'register', 'do_login', 'do_register'];
-// Nếu action không nằm trong danh sách public và người dùng chưa đăng nhập
-// thì chuyển hướng họ về trang đăng nhập
-// if (!in_array($action, $public_actions) && !isset($_SESSION['user_id'])) {
-// header('Location: index.php?action=login');
-// exit();
-// }
+// --- TRẠM KIỂM SOÁT BẢO MẬT ---
+// Nếu action KHÔNG nằm trong danh sách public VÀ người dùng CHƯA đăng nhập
+if (
+    !in_array($action, $public_actions) &&
+    !isset($_SESSION['user_id'])
+) {
+    // Ghi lại lỗi (tùy chọn, dùng FlashMessage)
+    // App\Core\FlashMessage::set('login_form', 'Vui lòng đăng nhập để tiếp tục.', 'error');
+    // Chuyển hướng về trang đăng nhập
+    header('Location: index.php?action=login');
+    exit(); // Dừng thực thi ngay lập tức
+}
 
 // Danh sách các action được bảo vệ (yêu cầu đăng nhập)
 $protected_actions = [
