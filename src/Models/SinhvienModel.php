@@ -131,6 +131,25 @@ class SinhvienModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getStudentsForExport($keyword = null)
+    {
+
+        $sql = "SELECT * FROM students";
+        $params = [];
+        if ($keyword) {
+            $sql .= " WHERE name LIKE :keyword OR email LIKE
+
+:keyword OR phone LIKE :keyword";
+
+            $params[':keyword'] = "%{$keyword}%";
+        }
+        $sql .= " ORDER BY id ASC"; // Sắp xếp theo ID tăng dần cho file xuất
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getStudents($keyword = null, $limit = 5, $offset = 0, $sortby = 'id', $order = 'desc')
     {
         // --- BƯỚC 1: ĐẾM ---

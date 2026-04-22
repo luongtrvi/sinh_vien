@@ -48,6 +48,7 @@ $protected_actions = [
     'detail',
     'change_password',
     'do_change_password',
+    'export_csv',
 ];
 if (
     in_array($action, $protected_actions) &&
@@ -144,6 +145,9 @@ switch ($action) {
         break;
     case 'do_change_password':
         $controller->handleChangePassword();
+        break;
+    case 'export_csv':
+        $controller->exportCsv();
         break;
     default:
         $controller = new SinhvienController();
