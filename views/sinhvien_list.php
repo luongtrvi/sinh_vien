@@ -117,6 +117,8 @@ initial-scale=1.0">
     <div class="container">
         <div style="text-align: right; margin-bottom: 15px;">
             Chào mừng, <strong><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong>!
+            <a href="index.php?action=change_password"
+                style="margin-left: 15px;">Đổi mật khẩu</a>
             <a href="index.php?action=logout"
                 style="margin-left: 15px;">Đăng xuất</a>
         </div>

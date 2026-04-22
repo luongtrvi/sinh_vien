@@ -46,6 +46,8 @@ $protected_actions = [
     'add',
     'dashboard',
     'detail',
+    'change_password',
+    'do_change_password',
 ];
 if (
     in_array($action, $protected_actions) &&
@@ -81,7 +83,10 @@ if (in_array($action, [
     'register',
     'do_login',
     'do_register',
-    'logout'
+    'logout',
+    'verify',
+    'change_password',
+    'do_change_password',
 ])) {
     $controller = new UserController();
 } elseif (in_array($action, ['contact', 'submit_contact'])) {
@@ -133,6 +138,12 @@ switch ($action) {
         break;
     case 'detail':
         $controller->detail();
+        break;
+    case 'change_password':
+        $controller->showChangePasswordForm();
+        break;
+    case 'do_change_password':
+        $controller->handleChangePassword();
         break;
     default:
         $controller = new SinhvienController();
