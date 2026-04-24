@@ -1,91 +1,10 @@
 <?php
 
-use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage; ?>
-<!DOCTYPE html>
-<html lang="vi">
+use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage;
 
-<head>
-    <meta charset="UTF-8">
-    <title>Đổi mật khẩu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color:
-                #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px 0;
-        }
+require_once __DIR__ . '/../views/layout/header.php';
 
-        .container {
-            background: #fff;
-            padding: 20px 30px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width:
-                400px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing:
-                border-box;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color:
-                #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor:
-                pointer;
-        }
-
-        .nav-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        /* Style cho Flash Message */
-        .flash-message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .flash-success {
-            background-color: #28a745;
-        }
-
-        .flash-error {
-            background-color: #dc3545;
-        }
-    </style>
-</head>
+?>
 
 <body>
     <div class="container">
@@ -117,5 +36,7 @@ use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage; ?>
         </div>
     </div>
 </body>
-
-</html>
+<?php
+// NẠP FOOTER
+require_once __DIR__ . '/../views/layout/footer.php';
+?>

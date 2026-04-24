@@ -1,87 +1,10 @@
 <?php
 
-use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage; ?>
-<!DOCTYPE html>
-<html lang="vi">
+use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage;
 
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard Thống kê Sinh viên</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color:
+require_once __DIR__ . '/../views/layout/header.php';
 
-                #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background:
-                #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .stat-card {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            width: 200px;
-            margin: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-card.green {
-            background-color: #28a745;
-        }
-
-        .stat-card.orange {
-            background-color: #ffc107;
-            color:
-
-                #333;
-        }
-
-        .stat-card .number {
-            font-size: 2.5em;
-            font-weight:
-
-                bold;
-            margin: 10px 0;
-        }
-
-        .stat-card .title {
-            font-size: 1.1em;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-
-            margin-top: 30px;
-        }
-    </style>
-
-</head>
+?>
 
 <body>
     <div class="container">
@@ -106,5 +29,7 @@ use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage; ?>
         <a href="index.php" class="back-link">Quay về danh sách</a>
     </div>
 </body>
-
-</html>
+<?php
+// NẠP FOOTER
+require_once __DIR__ . '/../views/layout/footer.php';
+?>
