@@ -189,6 +189,11 @@ function isActive($action, $current_action)
                                                             isActive('dashboard', $current_action); ?>">Dashboard</a>
             </li>
             <li>
+                <a href="index.php?action=logs" class="<?php echo
+                                                        isActive('logs', $current_action); ?>">Log Hoạt Động</a>
+
+            </li>
+            <li>
                 <a href="index.php?action=contact" class="<?php echo isActive(
                                                                 'contact',
 

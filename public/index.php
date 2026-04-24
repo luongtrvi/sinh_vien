@@ -11,6 +11,7 @@ require_once PROJECT_ROOT . '/vendor/autoload.php';
 use Luongtrieuvi\Bai01QuanlySv\Controllers\UserController;
 use Luongtrieuvi\Bai01QuanlySv\Controllers\SinhvienController;
 use Luongtrieuvi\Bai01QuanlySv\Controllers\PageController;
+use Luongtrieuvi\Bai01QuanlySv\Controllers\AdminController; // <-- THÊM DÒNG NÀY
 
 $action = $_GET['action'] ?? 'index';
 // Danh sách các action KHÔNG yêu cầu đăng nhập
@@ -49,6 +50,7 @@ $protected_actions = [
     'change_password',
     'do_change_password',
     'export_csv',
+    'logs',
 ];
 if (
     in_array($action, $protected_actions) &&
@@ -92,6 +94,8 @@ if (in_array($action, [
     $controller = new UserController();
 } elseif (in_array($action, ['contact', 'submit_contact'])) {
     $controller = new PageController();
+} elseif (in_array($action, ['logs'])) { // <-- THÊM ELSEIF MỚI
+    $controller = new AdminController();
 } else {
     $controller = new SinhvienController();
 }
@@ -148,6 +152,9 @@ switch ($action) {
         break;
     case 'export_csv':
         $controller->exportCsv();
+        break;
+    case 'logs':
+        $controller->showLogs();
         break;
     default:
         $controller = new SinhvienController();

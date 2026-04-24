@@ -5,6 +5,7 @@ namespace Luongtrieuvi\Bai01QuanlySv\Controllers;
 use Luongtrieuvi\Bai01QuanlySv\Models\UserModel;
 use Luongtrieuvi\Bai01QuanlySv\Core\Mailer;
 use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage;
+use Luongtrieuvi\Bai01QuanlySv\Core\Logger; //<-- THÊM DÒNG NÀY
 
 class UserController
 {
@@ -36,7 +37,6 @@ class UserController
 
                 empty($email)
             ) {
-
                 $error = "Vui lòng điền đầy đủ thông tin.";
                 require_once PROJECT_ROOT . '/src/views/register.php';
                 return;
@@ -107,6 +107,7 @@ class UserController
                 // Lưu thông tin người dùng vào Session để ghi
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
+                Logger::log('login_success'); // <-- GHI LOG
                 // Chuyển hướng đến trang quản lý sinh viên
                 header('Location: index.php');
                 exit();
@@ -121,6 +122,7 @@ class UserController
     // HÀM MỚI: Xử lý đăng xuất
     public function logout()
     {
+        Logger::log('logout'); // <-- GHI LOG (trước khi hủy session)
         // Hủy tất cả các biến session.
         $_SESSION = [];
         // Nếu muốn hủy session hoàn toàn, hãy xóa cả cookie
@@ -203,7 +205,7 @@ chính xác.', 'error');
             }
             // 4. Nếu mọi thứ OK, cập nhật mật khẩu mới
             if ($this->userModel->updatePassword($userId, $new_password)) {
-
+                Logger::log('password_change_success'); // <-- GHI LOG
                 FlashMessage::set('student_action', 'Đổi mật khẩu thành
 
 công! Vui lòng đăng nhập lại.', 'success');

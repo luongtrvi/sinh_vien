@@ -4,6 +4,7 @@ namespace Luongtrieuvi\Bai01QuanlySv\Controllers;
 
 use Luongtrieuvi\Bai01QuanlySv\Models\SinhvienModel;
 use Luongtrieuvi\Bai01QuanlySv\Core\FlashMessage;
+use Luongtrieuvi\Bai01QuanlySv\Core\Logger; //<-- THÊM DÒNG NÀY
 
 class SinhvienController
 {
@@ -135,6 +136,7 @@ class SinhvienController
                     $class_name,
                     $major
                 );
+                Logger::log('create_student', "Student Name: " . $name); // <-- GHI LOG
                 // Đặt thông báo thành công
                 FlashMessage::set('student_action', 'Thêm sinh viên thành công!', 'success');
             } else {
@@ -213,6 +215,7 @@ class SinhvienController
                     $class_name,
                     $major
                 );
+                Logger::log('update_student', "Student ID: " . $id); // <-- GHI LOG
                 FlashMessage::set('student_action', 'Cập nhật thông tin thành công!', 'success');
             } else {
                 FlashMessage::set('student_action', 'Cập nhật thất bại!', 'error');
@@ -237,6 +240,7 @@ class SinhvienController
                 }
             }
             if ($this->sinhvienModel->deleteStudent($id)) {
+                Logger::log('delete_student', "Student ID: " . $id); // <-- GHI LOG
                 FlashMessage::set('student_action', 'Xóa sinh viên thành công!', 'success');
             } else {
                 FlashMessage::set(
